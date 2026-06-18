@@ -23,12 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets\style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<a href="book_class.php">Book Class</a>
-<a href="bookings.php">View Bookings (Admin)</a>
+    <?php include 'navbar.php'; ?>
 <div class="container mt-5">
 
     <h2>Book a Class</h2>
@@ -46,6 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="Strength Training">Strength Training</option>
                 <option value="Cardio">Cardio</option>
                 <option value="Zumba">Zumba</option>
+                <option value="gymnastics">gymnastics</option>
+                <object value="boxing">Boxing</object>
+                <option value="pilates">pilates</option>
             </select>
         </div>
 

@@ -38,16 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body> 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-
-    <a class="navbar-brand" href="index.php">Feet To Fit</a>
-
-    <div class="ms-auto">
-
-      <a class="btn btn-outline-light btn-sm" href="index.php">Home</a>
-      <a class="btn btn-outline-light btn-sm" href="trainers.php">Trainers</a>
-      <a class="btn btn-outline-light btn-sm" href="book_class.php">Classes</a>
+    
+</body>
+</html>
 
       <?php if (isLoggedIn()): ?>
         <a class="btn btn-warning btn-sm" href="account.php">Dashboard</a>
@@ -55,6 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <?php else: ?>
         <a class="btn btn-success btn-sm" href="login.php">Login</a>
       <?php endif; ?>
+      <a class="btn btn-info btn-sm" href="register.php">Register</a>
+      <a class="btn btn-info btn-sm" href="contact.php">Contact</a>
+      <a class="btn btn-info btn-sm" href="about.php">About</a>
+      <a class="btn btn-info btn-sm" href="faq.php">FAQ</a>
 
       <?php if (isLoggedIn() && isAdmin()): ?>
         <a class="btn btn-info btn-sm" href="admin.php">Admin</a>
