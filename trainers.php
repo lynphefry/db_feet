@@ -93,26 +93,25 @@ include 'auth.php';
                     style="height:280px; width:100%; object-fit:cover;"
                     alt="<?= htmlspecialchars($t['name']) ?>">
 
-                <div class="card-body text-center">
+               <div class="card-body text-center">
 
-                    <h4>
-                        <?= htmlspecialchars($t['name']) ?>
-                    </h4>
+    <h4>
+        <?= htmlspecialchars($t['name'] ?? 'Trainer') ?>
+    </h4>
 
-                    <p class="text-muted">
-                        <?= htmlspecialchars($t['specialty']) ?>
-                    </p>
+    <?php if (isset($t['specialization'])) : ?>
+        <p class="text-muted">
+            <?= htmlspecialchars($t['specialization']) ?>
+        </p>
+    <?php endif; ?>
 
-                    <p>
-                        📞 <?= htmlspecialchars($t['phone']) ?>
-                    </p>
+    <?php if (isset($t['phone'])) : ?>
+        <p>
+            📞 <?= htmlspecialchars($t['phone']) ?>
+        </p>
+    <?php endif; ?>
 
-                </div>
-
-            </div>
-
-        </div>
-
+</div>
         <?php
             }
 

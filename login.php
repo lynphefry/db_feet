@@ -50,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <?php endif; ?>
       <a class="btn btn-info btn-sm" href="register.php">Register</a>
       <a class="btn btn-info btn-sm" href="contact.php">Contact</a>
-      <a class="btn btn-info btn-sm" href="about.php">About</a>
-      <a class="btn btn-info btn-sm" href="faq.php">FAQ</a>
+      
+      
 
       <?php if (isLoggedIn() && isAdmin()): ?>
         <a class="btn btn-info btn-sm" href="admin.php">Admin</a>

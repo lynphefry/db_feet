@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include 'auth.php';
 
 if (!isset($_SESSION['cart'])) {
@@ -73,13 +73,8 @@ if (!isset($_SESSION['cart'])) {
         ?>
 
     </div>
-foreach ($_SESSION['cart'] as $index => $item) {
-    echo "<div class='d-flex justify-content-between border-bottom py-1'>";
-    echo "<span>{$item['name']}</span>";
-    echo "<strong>Ksh {$item['price']}</strong>";
-    echo "<a href='remove_cart.php?id=$index' class='btn btn-sm btn-danger'>X</a>";
-    echo "</div>";
-}
+
+
     <!-- PRODUCTS -->
     <div class="row g-4">
 
@@ -91,7 +86,7 @@ foreach ($_SESSION['cart'] as $index => $item) {
                     <h5>Men Training Outfit</h5>
                     <p>Ksh 3,500</p>
 
-                    <form method="POST" action="cart.php">
+                    <form method="POST" action="add_to_cart.php">
                         <input type="hidden" name="name" value="Men Training Outfit">
                         <input type="hidden" name="price" value="3500">
                         <button class="btn btn-success">Add to Cart</button>
