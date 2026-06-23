@@ -1,5 +1,26 @@
 <?php
+include 'db.php';
 include 'auth.php';
+
+$message = "";
+
+
+if (isset($_GET['plan'])) {
+
+    if (!isLoggedIn()) {
+        die("Please login first.");
+    }
+
+    $plan = $_GET['plan'];
+    $user_id = $_SESSION['user_id'];
+
+    
+    $stmt = $conn->prepare("INSERT INTO memberships (user_id, plan) VALUES (?, ?)");
+    $stmt->bind_param("is", $user_id, $plan);
+    $stmt->execute();
+
+    $message = "You joined the " . htmlspecialchars($plan) . " plan successfully!";
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +36,7 @@ include 'auth.php';
 
 <body>
 
-<!-- SIMPLE NAVBAR -->
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
 
@@ -46,34 +67,31 @@ include 'auth.php';
 <div class="container mt-5">
 
     <h2 class="text-center fw-bold mb-4">Membership Plans</h2>
-    <p class="text-center text-muted mb-5">
+
+    <p class="text-center text-muted mb-4">
         Choose the plan that fits your fitness journey
     </p>
+
+    <!-- SUCCESS MESSAGE -->
+    <?php if (!empty($message)) : ?>
+        <div class="alert alert-success text-center">
+            <?= $message ?>
+        </div>
+    <?php endif; ?>
 
     <div class="row g-4">
 
         <!-- BASIC -->
         <div class="col-md-4">
-
-            <div class="card shadow-lg border-0 h-100 text-center">
+            <div class="card shadow h-100 text-center">
 
                 <div class="card-header bg-info text-white">
                     BASIC
                 </div>
 
                 <div class="card-body">
-
-                    <h3 class="fw-bold">Ksh 2,000</h3>
-
-                    <p class="text-muted">Gym access only</p>
-
-                    <ul class="list-unstyled">
-                        <li>✔ Gym Access</li>
-                        <li>✔ Basic Equipment</li>
-                        <li>❌ Trainer</li>
-                        <li>❌ VIP Support</li>
-                    </ul>
-
+                    <h3>Ksh 2,000</h3>
+                    <p>Gym access only</p>
                 </div>
 
                 <div class="card-footer">
@@ -83,31 +101,19 @@ include 'auth.php';
                 </div>
 
             </div>
-
         </div>
 
         <!-- PREMIUM -->
         <div class="col-md-4">
-
-            <div class="card shadow-lg border-0 h-100 text-center">
+            <div class="card shadow h-100 text-center">
 
                 <div class="card-header bg-info text-white">
                     PREMIUM
                 </div>
 
                 <div class="card-body">
-
-                    <h3 class="fw-bold">Ksh 5,000</h3>
-
-                    <p class="text-muted">Gym + Trainer</p>
-
-                    <ul class="list-unstyled">
-                        <li>✔ Gym Access</li>
-                        <li>✔ Personal Trainer</li>
-                        <li>✔ Diet Plan</li>
-                        <li>❌ VIP Support</li>
-                    </ul>
-
+                    <h3>Ksh 5,000</h3>
+                    <p>Gym + Trainer</p>
                 </div>
 
                 <div class="card-footer">
@@ -117,31 +123,19 @@ include 'auth.php';
                 </div>
 
             </div>
-
         </div>
 
         <!-- VIP -->
         <div class="col-md-4">
-
-            <div class="card shadow-lg border-0 h-100 text-center">
+            <div class="card shadow h-100 text-center">
 
                 <div class="card-header bg-info text-dark">
                     VIP
                 </div>
 
                 <div class="card-body">
-
-                    <h3 class="fw-bold">Ksh 8,000</h3>
-
-                    <p class="text-muted">All access unlimited</p>
-
-                    <ul class="list-unstyled">
-                        <li>✔ Gym Access</li>
-                        <li>✔ Personal Trainer</li>
-                        <li>✔ Diet Plan</li>
-                        <li>✔ VIP Support</li>
-                    </ul>
-
+                    <h3>Ksh 8,000</h3>
+                    <p>All access unlimited</p>
                 </div>
 
                 <div class="card-footer">
@@ -151,7 +145,6 @@ include 'auth.php';
                 </div>
 
             </div>
-
         </div>
 
     </div>

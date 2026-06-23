@@ -12,9 +12,9 @@ include 'auth.php';
     <meta charset="UTF-8">
     <title>Schedule | FEET TO FIT</title>
 
-```
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-```
+
 
 </head>
 
@@ -23,7 +23,7 @@ include 'auth.php';
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
 
-```
+
     <a class="navbar-brand" href="index.php">FEET TO FIT</a>
 
     <div class="navbar-nav ms-auto">
@@ -48,13 +48,13 @@ include 'auth.php';
     </div>
 
 </div>
-```
+
 
 </nav>
 
 <div class="container mt-5">
 
-```
+
 <h2 class="text-center fw-bold mb-4">Class Schedule</h2>
 
 <p class="text-center text-muted mb-4">
@@ -154,7 +154,7 @@ include 'auth.php';
     </table>
 
 </div>
-```
+
 
 </div>
 

@@ -3,6 +3,7 @@ include 'db.php';
 include 'auth.php';
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,82 +63,52 @@ include 'auth.php';
     </p>
 
     <div class="row g-4">
+<?php
+    // fetch trainers from database
+    $sql = "SELECT * FROM trainers";
+    $result = $conn->query($sql);
 
-        <?php
+    if ($result && $result->num_rows > 0) {
+        while ($t = $result->fetch_assoc()) {
+            // choose image: use server filesystem to check, use URL for <img>
+            $defaultUrl = 'assets\images\trainers/default.jpg';
+            $imgFileUrl = $defaultUrl;
 
-        $result = mysqli_query($conn, "SELECT * FROM trainers");
+            if (!empty($t['image'])) {
+                $filename = basename($t['image']); // avoid path traversal
+                $fsPath = __DIR__ . '/assets/images/trainers/' . $filename; // filesystem path
+                $urlPath = 'assets/images/trainers/' . rawurlencode($filename);   // url path
 
-        if ($result && mysqli_num_rows($result) > 0) {
-
-            while ($t = mysqli_fetch_assoc($result)) {
-
-                $imgFile = "assets/images/default.jpg";
-
-                if (!empty($t['image'])) {
-
-                    $possibleImage = "assets/images/" . $t['image'];
-
-                    if (file_exists($possibleImage)) {
-                        $imgFile = $possibleImage;
-                    }
+                if (is_file($fsPath) && is_readable($fsPath)) {
+                    $imgFileUrl = $urlPath;
                 }
-        ?>
-
-        <div class="col-md-4">
-
-            <div class="card shadow h-100">
-
-                <img
-                    src="<?= htmlspecialchars($imgFile) ?>"
-                    class="card-img-top"
-                    style="height:280px; width:100%; object-fit:cover;"
-                    alt="<?= htmlspecialchars($t['name']) ?>">
-
-                <div class="card-body text-center">
-
-                    <h4>
-                        <?= htmlspecialchars($t['name']) ?>
-                    </h4>
-
-                    <p class="text-muted">
-                        <?= htmlspecialchars($t['specialty']) ?>
-                    </p>
-
-                    <p>
-                        📞 <?= htmlspecialchars($t['phone']) ?>
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <?php
             }
-
-        } else {
-        ?>
-
-            <div class="col-12 text-center">
-
-                <div class="alert alert-warning">
-
-                    <h4>No Trainers Found</h4>
-
-                    <p>
-                        Add trainers from the admin panel.
-                    </p>
-
+            ?>
+            
+        <div class="col-md-4">
+            <div class="card shadow h-100">
+                <img src="<?php echo htmlspecialchars($imgFileUrl, ENT_QUOTES); ?>" class="card-img-top" style="height:280px; width:100%; object-fit:cover;" alt="<?php echo htmlspecialchars($t['name'], ENT_QUOTES); ?>" onerror="this.onerror=null;this.src='assets/images/trainers/default.jpg';">
+                <div class="card-body text-center">
+                    <h4><?php echo htmlspecialchars($t['name'], ENT_QUOTES); ?></h4>
+                    <p class="text-muted"><?php echo htmlspecialchars($t['specialty'], ENT_QUOTES); ?></p>
+                    <p>📞 <?php echo htmlspecialchars($t['phone'], ENT_QUOTES); ?></p>
                 </div>
-
             </div>
-
+        </div>
         <?php
-        }
+        } // end while
+    } else {
         ?>
-
-    </div>
+        <div class="col-12 text-center">
+            <div class="alert alert-warning">
+                <h4>No Trainers Found</h4>
+                <p>Add trainers from the admin panel.</p>
+            </div>
+        </div>
+        <?php
+    }
+?>
+  </div>
 
 </div>
 

@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include 'auth.php';
 
 if (!isset($_SESSION['cart'])) {
@@ -44,42 +44,8 @@ if (!isset($_SESSION['cart'])) {
         Gym products and accessories
     </p>
 
-    <!-- CART SECTION -->
-    <div class="card p-3 mb-4 shadow-sm">
+    
 
-        <h4>Your Cart</h4>
-
-        <?php
-        $total = 0;
-
-        if (!empty($_SESSION['cart'])) {
-
-            foreach ($_SESSION['cart'] as $item) {
-                echo "<div class='d-flex justify-content-between border-bottom py-1'>";
-                echo "<span>{$item['name']}</span>";
-                echo "<strong>Ksh {$item['price']}</strong>";
-                echo "</div>";
-
-                $total += $item['price'];
-            }
-
-            echo "<hr>";
-            echo "<h5>Total: Ksh $total</h5>";
-            echo "<a href='checkout.php' class='btn btn-primary mt-2'>Checkout</a>";
-
-        } else {
-            echo "<p class='text-muted'>Cart is empty</p>";
-        }
-        ?>
-
-    </div>
-foreach ($_SESSION['cart'] as $index => $item) {
-    echo "<div class='d-flex justify-content-between border-bottom py-1'>";
-    echo "<span>{$item['name']}</span>";
-    echo "<strong>Ksh {$item['price']}</strong>";
-    echo "<a href='remove_cart.php?id=$index' class='btn btn-sm btn-danger'>X</a>";
-    echo "</div>";
-}
     <!-- PRODUCTS -->
     <div class="row g-4">
 
@@ -109,7 +75,7 @@ foreach ($_SESSION['cart'] as $index => $item) {
                     <h5>Women Training Outfit</h5>
                     <p>Ksh 4,000</p>
 
-                    <form method="POST" action="cart.php">
+                  <form method="POST" action="add_to_cart.php">
                         <input type="hidden" name="name" value="Women Training Outfit">
                         <input type="hidden" name="price" value="4000">
                         <button class="btn btn-success">Add to Cart</button>
