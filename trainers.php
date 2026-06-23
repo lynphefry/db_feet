@@ -71,7 +71,7 @@ include 'auth.php';
     if ($result && $result->num_rows > 0) {
         while ($t = $result->fetch_assoc()) {
             // choose image: use server filesystem to check, use URL for <img>
-            $defaultUrl = 'assets\images\trainers/default.jpg';
+            $defaultUrl = 'assets/images/trainers/default.jpg';
             $imgFileUrl = $defaultUrl;
 
             if (!empty($t['image'])) {
@@ -83,7 +83,7 @@ include 'auth.php';
                     $imgFileUrl = $urlPath;
                 }
             }
-            ?>
+?>
             
         <div class="col-md-4">
             <div class="card shadow h-100">

@@ -15,7 +15,22 @@ $result = mysqli_query($conn, "SELECT * FROM members");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <?php include 'navbar.php'; ?>
+    <div class="container mt-5">
 
+    <h2>Admin Dashboard</h2>
+
+    <div class="mb-3">
+
+        <a href="add_trainer.php" class="btn btn-success">Add Trainer</a>
+        <a href="trainers.php" class="btn btn-primary">View Trainers</a>
+        <a href="bookings.php" class="btn btn-warning">View Bookings</a>
+<a href="orders.php" class="btn btn-primary">
+    View Orders
+</a>
+    </div>
+<a href="add_trainer.php" class="btn btn-success mb-3">Add Trainer</a>
+<a href="trainers.php" class="btn btn-primary mb-3">View Trainers</a>
 <div class="container mt-5">
 
     <h2>Admin Dashboard</h2>

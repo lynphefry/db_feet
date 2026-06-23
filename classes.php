@@ -14,7 +14,7 @@ include 'auth.php';
 
 <body>
 
-<!-- NAVBAR (simple version) -->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
 
@@ -27,7 +27,7 @@ include 'auth.php';
             <a class="nav-link text-white" href="classes.php">Classes</a>
             <a class="nav-link text-white" href="schedule.php">Schedule</a>
             <a class="nav-link text-white" href="membership.php">Membership</a>
-            <a class="nav-link text-white" href="shop.php">Shop</a>
+            
 
             <?php if (isLoggedIn()) : ?>
                 <a class="nav-link text-white" href="booking.php">My Bookings</a>

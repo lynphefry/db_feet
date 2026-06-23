@@ -15,11 +15,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $class = $_POST['class'];
     $user_id = $_SESSION['user_id'];
 
-    $stmt = $conn->prepare("INSERT INTO bookings (user_id, class_name) VALUES (?, ?)");
-    $stmt->bind_param("is", $user_id, $class);
-    $stmt->execute();
+    // CHECK DOUBLE BOOKING
+    $check = $conn->prepare("
+        SELECT id FROM bookings 
+        WHERE user_id = ? AND class_name = ?
+    ");
 
-    $success = "Class booked successfully!";
+    $check->bind_param("is", $user_id, $class);
+    $check->execute();
+    $check->store_result();
+
+    if ($check->num_rows > 0) {
+
+        $success = "⚠ You already booked this class!";
+
+    } else {
+
+        $stmt = $conn->prepare("
+            INSERT INTO bookings (user_id, class_name) 
+            VALUES (?, ?)
+        ");
+
+        $stmt->bind_param("is", $user_id, $class);
+        $stmt->execute();
+
+        $success = "✅ Class booked successfully!";
+    }
 }
 ?>
 
@@ -29,19 +50,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Book Class | FEET TO FIT</title>
 
-    <link rel="stylesheet" href="assets/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
 
+<!-- NAVBAR -->
+<?php include 'navbar.php'; ?>
+
 <div class="container mt-5">
 
     <h2 class="mb-4">Book a Class</h2>
 
-    <!-- SUCCESS MESSAGE -->
     <?php if (!empty($success)) : ?>
-        <div class="alert alert-success">
+        <div class="alert alert-info">
             <?= $success ?>
         </div>
     <?php endif; ?>
@@ -71,6 +93,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
