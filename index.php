@@ -126,6 +126,12 @@ Add Trainer
 </a>
 </li>
 
+<li class="nav-item">
+<a class="nav-link text-warning" href="dashbord.php">
+Dashboard
+</a>
+</li>
+
 <?php endif; ?>
 
 <li class="nav-item">
@@ -308,7 +314,7 @@ data-bs-slide="next">
                         Push your limits in our 30-day transformation challenge.
                     </p>
 
-                    <a href="membership.php" class="btn btn-info">
+                    <a href="register.php" class="btn btn-info">
                         Join Event
                     </a>
 
@@ -338,7 +344,7 @@ data-bs-slide="next">
                         Improve flexibility, balance and relaxation with our experts.
                     </p>
 
-                    <a href="membership.php" class="btn btn-info">
+                    <a href="register.php" class="btn btn-info">
                         Register
                     </a>
 
@@ -368,7 +374,7 @@ data-bs-slide="next">
                         Learn advanced strength training techniques from professionals.
                     </p>
 
-                    <a href="membership.php" class="btn btn-info">
+                    <a href="register.php" class="btn btn-info">
                         Learn More
                     </a>
 

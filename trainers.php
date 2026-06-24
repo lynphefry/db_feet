@@ -10,8 +10,9 @@ include 'auth.php';
 <head>
     <meta charset="UTF-8">
     <title>Trainers | FEET TO FIT</title>
-
+<link rel="stylesheet" href="assets\style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -31,6 +32,7 @@ include 'auth.php';
             <a class="nav-link" href="membership.php">Membership</a>
             <a class="nav-link" href="shop.php">Shop</a>
             <a class="nav-link" href="contact.php">Contact</a>
+<a class="nav-link text-white" href="dashbord.php">Dashboard</a>
 
             <?php if (isLoggedIn()) : ?>
                 <a class="nav-link" href="booking.php">Bookings</a>

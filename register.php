@@ -1,6 +1,7 @@
 <?php
 include 'db.php';
 include 'auth.php';
+include 'navbar.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -22,8 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <link rel="stylesheet" href="assets\style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
 </head>
 <body>
+  
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
 
@@ -34,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <a class="btn btn-outline-light btn-sm" href="index.php">Home</a>
       <a class="btn btn-outline-light btn-sm" href="trainers.php">Trainers</a>
       <a class="btn btn-outline-light btn-sm" href="book_class.php">Classes</a>
+      <a class="nav-link text-white" href="dashbord.php">Dashboard</a>
 
       <?php if (isLoggedIn()): ?>
         <a class="btn btn-warning btn-sm" href="account.php">Dashboard</a>
@@ -51,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
 </nav>
 
-<h2>Register</h2>
+
 
 <div class="container mt-5">
 
@@ -63,34 +68,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <h3 class="text-center">Register</h3>
 
+        
+
         <form method="POST">
 
-          <div class="mb-3">
-            <label>Name</label>
-            <input type="text" name="name" class="form-control" required>
-          </div>
-
-          <div class="mb-3">
-            <label>Email</label>
-            <input type="email" name="email" class="form-control" required>
-          </div>
-
-          <div class="mb-3">
-            <label>Password</label>
-            <input type="password" name="password" class="form-control" required>
-          </div>
-
-          <button class="btn btn-primary w-100">Create Account</button>
-
-        </form>
-
-      </div>
-
+    <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input type="text"
+               name="name"
+               class="form-control"
+               placeholder="Enter your name"
+               required>
     </div>
 
-  </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email"
+               name="email"
+               class="form-control"
+               placeholder="Enter your email"
+               required>
+    </div>
 
-</div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password"
+               name="password"
+               class="form-control"
+               placeholder="Create password"
+               required>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">
+        Create Account
+    </button>
+
+</form>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

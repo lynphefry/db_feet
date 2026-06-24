@@ -1,7 +1,7 @@
 <?php
 include 'db.php';
 include 'auth.php';
-
+include 'navbar.php';
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -30,78 +30,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="assets\style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
 </head>
-<body> 
-    
-</body>
-</html>
+<body>
+  
+  <div class="container vh-100 d-flex justify-content-center align-items-center">
 
-      <?php if (isLoggedIn()): ?>
-        <a class="btn btn-warning btn-sm" href="account.php">Dashboard</a>
-        <a class="btn btn-danger btn-sm" href="logout.php">Logout</a>
-      <?php else: ?>
-        <a class="btn btn-success btn-sm" href="login.php">Login</a>
-      <?php endif; ?>
-      <a class="btn btn-info btn-sm" href="register.php">Register</a>
-      <a class="btn btn-info btn-sm" href="contact.php">Contact</a>
-      
-      
+    <div class="card shadow-lg p-4" style="width:450px;border-radius:20px;">
 
-      <?php if (isLoggedIn() && isAdmin()): ?>
-        <a class="btn btn-info btn-sm" href="admin.php">Admin</a>
-      <?php endif; ?>
+        <h2 class="text-center mb-4 fw-bold">
+            FEET TO FIT
+        </h2>
 
-    </div>
-
-  </div>
-</nav>
-
-<h2>Login</h2>
-
-<div class="container mt-5">
-
-  <div class="row justify-content-center">
-
-    <div class="col-md-5">
-
-      <div class="card shadow p-4">
-
-        <h3 class="text-center mb-3">Login</h3>
-  <?php if (!empty($error)) { ?>
-            <div class="alert alert-danger">
-                <?= $error ?>
-            </div>
-        <?php } ?>
+        <p class="text-center text-muted">
+            Welcome Back
+        </p>
 
         <form method="POST">
 
-          <div class="mb-3">
-            <label>Email</label>
-            <input type="email" name="email" class="form-control" required>
-          </div>
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       required>
+            </div>
 
-          <div class="mb-3">
-            <label>Password</label>
-            <input type="password" name="password" class="form-control" required>
-          </div>
-
-          <button class="btn btn-success w-100">Login</button>
+            <div class="mb-3">
+                <label>Password</label>
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       required>
+            </div>
+<div class="text-end mb-3">
+    <a href="#" class="fw-bold text-success text-decoration-none">Forgot Password?</a>
+</div>
+            <button class="btn btn-success w-100">
+                Login
+            </button>
 
         </form>
 
-      </div>
-
-    </div>
-
-  </div>
+    <p class="text-center mt-4">
+    New to FEET TO FIT?
+    <a href="register.php" class="fw-bold text-success text-decoration-none">
+        Create Account
+    </a>
+</p>    
 
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

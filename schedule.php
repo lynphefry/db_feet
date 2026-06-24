@@ -12,7 +12,7 @@ include 'auth.php';
     <meta charset="UTF-8">
     <title>Schedule | FEET TO FIT</title>
 
-
+<link rel="stylesheet" href="assets\style.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
@@ -35,6 +35,7 @@ include 'auth.php';
         <a class="nav-link text-white" href="membership.php">Membership</a>
         <a class="nav-link text-white" href="shop.php">Shop</a>
         <a class="nav-link text-white" href="contact.php">Contact</a>
+        <a class="nav-link text-white" href="dashbord.php">Dashboard</a>
 
         <?php if (isLoggedIn()) : ?>
             <a class="nav-link text-white" href="booking.php">Bookings</a>
@@ -61,102 +62,120 @@ include 'auth.php';
     Plan your workouts and stay consistent
 </p>
 
-<div class="card shadow p-4">
+<div class="card shadow-lg border-0 rounded-4 p-4">
 
-    <table class="table table-striped table-hover text-center">
 
-        <thead class="table-dark">
-            <tr>
-                <th>Day</th>
-                <th>Class</th>
-                <th>Time</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+<table class="table table-hover text-center align-middle">
 
-        <tbody>
+    <thead class="table-dark">
+        <tr>
+            <th>Day</th>
+            <th>Class</th>
+            <th>Trainer</th>
+            <th>Time</th>
+            <th>Slots</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
 
-            <tr>
-                <td>Monday</td>
-                <td>Yoga</td>
-                <td>6:00 AM</td>
-                <td><span class="badge bg-success">Available</span></td>
-                <td>
-                    <a href="booking.php?class=Yoga" class="btn btn-success btn-sm">
-                        Book Now
-                    </a>
-                </td>
-            </tr>
+    <tbody>
 
-            <tr>
-                <td>Tuesday</td>
-                <td>Gymnastics</td>
-                <td>5:00 PM</td>
-                <td><span class="badge bg-success">Available</span></td>
-                <td>
-                    <a href="booking.php?class=Gymnastics" class="btn btn-success btn-sm">
-                        Book Now
-                    </a>
-                </td>
-            </tr>
+        <tr>
+            <td>Monday</td>
+            <td>Yoga</td>
+            <td>Mary Wanjiku</td>
+            <td>6:00 AM</td>
+            <td>15 / 20</td>
+            <td><span class="badge bg-primary">Available</span></td>
+            <td>
+                <a href="book_class.php?class=Yoga" class="btn btn-primary btn-sm">
+                    Book Now
+                </a>
+            </td>
+        </tr>
 
-            <tr>
-                <td>Wednesday</td>
-                <td>Zumba</td>
-                <td>5:00 PM</td>
-                <td><span class="badge bg-success">Available</span></td>
-                <td>
-                    <a href="booking.php?class=Zumba" class="btn btn-success btn-sm">
-                        Book Now
-                    </a>
-                </td>
-            </tr>
+        <tr>
+            <td>Tuesday</td>
+            <td>Gymnastics</td>
+            <td>David Mwangi</td>
+            <td>5:00 PM</td>
+            <td>12 / 20</td>
+            <td><span class="badge bg-primary">Available</span></td>
+            <td>
+                <a href="book_class.php?class=Gymnastics" class="btn btn-primary btn-sm">
+                    Book Now
+                </a>
+            </td>
+        </tr>
 
-            <tr>
-                <td>Thursday</td>
-                <td>Pilates</td>
-                <td>5:00 PM</td>
-                <td><span class="badge bg-warning text-dark">Limited</span></td>
-                <td>
-                    <a href="booking.php?class=Pilates" class="btn btn-warning btn-sm">
-                        Book Now
-                    </a>
-                </td>
-            </tr>
+        <tr>
+            <td>Wednesday</td>
+            <td>Zumba</td>
+            <td>Angie Wambui</td>
+            <td>5:00 PM</td>
+            <td>18 / 20</td>
+            <td><span class="badge bg-primary">Available</span></td>
+            <td>
+                <a href="book_class.php?class=Zumba" class="btn btn-primary btn-sm">
+                    Book Now
+                </a>
+            </td>
+        </tr>
 
-            <tr>
-                <td>Friday</td>
-                <td>Strength Training</td>
-                <td>6:00 PM</td>
-                <td><span class="badge bg-warning text-dark">Limited</span></td>
-                <td>
-                    <a href="booking.php?class=Strength Training" class="btn btn-warning btn-sm">
-                        Book Now
-                    </a>
-                </td>
-            </tr>
+        <tr>
+            <td>Thursday</td>
+            <td>Pilates</td>
+            <td>Amina Noor</td>
+            <td>5:00 PM</td>
+            <td>19 / 20</td>
+            <td><span class="badge bg-danger text-dark">Limited</span></td>
+            <td>
+                <a href="book_class.php?class=Pilates" class="btn btn-danger btn-sm">
+                    Book Now
+                </a>
+            </td>
+        </tr>
 
-            <tr>
-                <td>Saturday</td>
-                <td>Zumba</td>
-                <td>5:00 PM</td>
-                <td><span class="badge bg-success">Available</span></td>
-                <td>
-                    <a href="booking.php?class=Zumba" class="btn btn-success btn-sm">
-                        Book Now
-                    </a>
-                </td>
-            </tr>
+        <tr>
+            <td>Friday</td>
+            <td>Strength Training</td>
+            <td>John Mwangi</td>
+            <td>6:00 PM</td>
+            <td>20 / 20</td>
+            <td><span class="badge bg-danger">Full</span></td>
+            <td>
+                <button class="btn btn-danger btn-sm" disabled>
+                    Full
+                </button>
+            </td>
+        </tr>
 
-        </tbody>
+        <tr>
+            <td>Saturday</td>
+            <td>Zumba</td>
+            <td>Brian Otieno</td>
+            <td>5:00 PM</td>
+            <td>10 / 20</td>
+            <td><span class="badge bg-primary">Available</span></td>
+            <td>
+                <a href="book_class.php?class=Zumba" class="btn btn-primary btn-sm">
+                    Book Now
+                </a>
+            </td>
+        </tr>
 
-    </table>
+    </tbody>
+
+</table>
+```
 
 </div>
 
+<footer class="bg-dark text-white text-center py-3 mt-5 rounded">
+    © 2026 FEET TO FIT | Transform Your Body, Transform Your Life
+</footer>
 
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

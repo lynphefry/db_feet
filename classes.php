@@ -1,5 +1,6 @@
 <?php
 include 'auth.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -8,8 +9,9 @@ include 'auth.php';
 <head>
     <meta charset="UTF-8">
     <title>Classes | FEET TO FIT</title>
-
+<link rel="stylesheet" href="assets\style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -101,7 +103,7 @@ include 'auth.php';
          <div class="col-md-4">
             <div class="card shadow h-100">
 
-                <img src="assets/images/boxing.jpg"
+                <img src="assets\images\trainers\boxing.jpg"
                      class="card-img-top"
                      style="height:220px; object-fit:cover;">
 

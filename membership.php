@@ -32,11 +32,12 @@ if (isset($_GET['plan'])) {
 
     <link rel="stylesheet" href="assets/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
 
@@ -51,6 +52,7 @@ if (isset($_GET['plan'])) {
             <a class="nav-link text-white" href="membership.php">Membership</a>
             <a class="nav-link text-white" href="shop.php">Shop</a>
             <a class="nav-link text-white" href="contact.php">Contact</a>
+             <a class="nav-link text-white" href="dashbord.php">Dashboard</a>
 
             <?php if (isLoggedIn()) : ?>
                 <a class="nav-link text-danger" href="logout.php">Logout</a>
@@ -63,16 +65,35 @@ if (isset($_GET['plan'])) {
     </div>
 </nav>
 
-<!-- CONTENT -->
+
 <div class="container mt-5">
 
-    <h2 class="text-center fw-bold mb-4">Membership Plans</h2>
+    <h1 class="text-center fw-bold">Membership Plans</h1>
 
-    <p class="text-center text-muted mb-4">
-        Choose the plan that fits your fitness journey
-    </p>
+<p class="text-center text-muted mb-5">
+    Choose a membership package that supports your fitness goals.
+</p>
 
-    <!-- SUCCESS MESSAGE -->
+   <div class="row text-center mb-5">
+
+    <div class="col-md-4">
+        <h3>500+</h3>
+        <p>Active Members</p>
+    </div>
+
+    <div class="col-md-4">
+        <h3>20+</h3>
+        <p>Professional Trainers</p>
+    </div>
+
+    <div class="col-md-4">
+        <h3>50+</h3>
+        <p>Weekly Classes</p>
+    </div>
+
+</div>
+
+    
     <?php if (!empty($message)) : ?>
         <div class="alert alert-success text-center">
             <?= $message ?>
@@ -81,17 +102,21 @@ if (isset($_GET['plan'])) {
 
     <div class="row g-4">
 
-        <!-- BASIC -->
+        
         <div class="col-md-4">
             <div class="card shadow h-100 text-center">
-
-                <div class="card-header bg-info text-white">
-                    BASIC
-                </div>
+<div class="card-header bg-info text-white">
+    💪 BASIC
+</div>
 
                 <div class="card-body">
-                    <h3>Ksh 2,000</h3>
-                    <p>Gym access only</p>
+                   <h1 class="fw-bold">Ksh 2,000</h1>
+<p class="text-muted">Per Month</p>
+                    <p><ul class="list-unstyled mt-3">
+    <li>✔ Gym Access</li>
+    <li>✔ Locker Room Access</li>
+    <li>✔ Fitness Assessment</li>
+</ul></p>
                 </div>
 
                 <div class="card-footer">
@@ -103,54 +128,67 @@ if (isset($_GET['plan'])) {
             </div>
         </div>
 
-        <!-- PREMIUM -->
-        <div class="col-md-4">
-            <div class="card shadow h-100 text-center">
+      
+<div class="col-md-4">
+    <div class="card shadow h-100 text-center border-info">
 
-                <div class="card-header bg-info text-white">
-                    PREMIUM
-                </div>
-
-                <div class="card-body">
-                    <h3>Ksh 5,000</h3>
-                    <p>Gym + Trainer</p>
-                </div>
-
-                <div class="card-footer">
-                    <a href="membership.php?plan=premium" class="btn btn-info w-100">
-                        Join Now
-                    </a>
-                </div>
-
-            </div>
+        <div class="card-header bg-info text-white">
+            🏋️ PREMIUM
         </div>
 
-        <!-- VIP -->
-        <div class="col-md-4">
-            <div class="card shadow h-100 text-center">
+        <div class="card-body">
+            <h1 class="fw-bold">Ksh 5,000</h1>
+            <p class="text-muted">Per Month</p>
 
-                <div class="card-header bg-info text-dark">
-                    VIP
-                </div>
+            <ul class="list-unstyled mt-3">
+                <li>✔ Full Gym Access</li>
+                <li>✔ Personal Trainer</li>
+                <li>✔ Diet & Nutrition Plan</li>
+                <li>✔ Locker Room Access</li>
+                <li>✔ Fitness Assessment</li>
+            </ul>
+        </div>
 
-                <div class="card-body">
-                    <h3>Ksh 8,000</h3>
-                    <p>All access unlimited</p>
-                </div>
-
-                <div class="card-footer">
-                    <a href="membership.php?plan=vip" class="btn btn-info w-100">
-                        Join Now
-                    </a>
-                </div>
-
-            </div>
+        <div class="card-footer">
+            <a href="membership.php?plan=premium" class="btn btn-info w-100">
+                Join Now
+            </a>
         </div>
 
     </div>
-
 </div>
+       
+<div class="col-md-4">
+    <div class="card shadow h-100 text-center border-info">
 
+        <div class="card-header bg-info text-dark">
+            👑 VIP
+        </div>
+
+        <div class="card-body">
+            <h1 class="fw-bold">Ksh 8,000</h1>
+            <p class="text-muted">Per Month</p>
+
+            <ul class="list-unstyled mt-3">
+                <li>✔ Everything in Premium</li>
+                <li>✔ Unlimited Classes</li>
+                <li>✔ Priority Booking</li>
+                <li>✔ Nutrition Coaching</li>
+                <li>✔ VIP Support</li>
+            </ul>
+        </div>
+
+        <div class="card-footer">
+            <a href="membership.php?plan=vip" class="btn btn-info w-100">
+                Join Now
+            </a>
+        </div>
+
+    </div>
+</div>
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    © 2026 FEET TO FIT | All Rights Reserved
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
