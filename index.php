@@ -1,18 +1,10 @@
 <?php
-include 'auth.php';
+include 'includes/db.php';
+include 'includes/auth.php';
+
+include 'includes/header.php';
+include 'includes/navbar.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>FEET TO FIT</title>
-
-<link rel="stylesheet" href="assets/style.css">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 .carousel-item img{
@@ -21,148 +13,11 @@ include 'auth.php';
 }
 
 .hero-caption{
-    background:rgba(0,0,0,0.4);
+    background:rgba(0,0,0,0.5);
     padding:20px;
     border-radius:10px;
 }
-
-.navbar{
-    z-index:1000;
-}
 </style>
-
-</head>
-<body>
-
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark position-absolute w-100">
-
-<div class="container">
-
-<a class="navbar-brand fw-bold" href="index.php">
-FEET TO FIT
-</a>
-
-<button class="navbar-toggler"
-type="button"
-data-bs-toggle="collapse"
-data-bs-target="#navbarNav">
-
-<span class="navbar-toggler-icon"></span>
-
-</button>
-
-<div class="collapse navbar-collapse" id="navbarNav">
-
-<ul class="navbar-nav ms-auto">
-
-<li class="nav-item">
-<a class="nav-link text-white" href="index.php">Home</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="trainers.php">Trainers</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="classes.php">Classes</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="schedule.php">Schedule</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="register.php">register</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="membership.php">Membership</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="shop.php">Shop</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="contact.php">contact</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="booking.php">Booking</a>
-</li>
-
-<?php if(isLoggedIn()) : ?>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="book_class.php">
-Book Class
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="booking.php">
-Bookings
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-white" href="account.php">
-Account
-</a>
-</li>
-
-<?php if(isAdmin()) : ?>
-
-<li class="nav-item">
-<a class="nav-link text-warning" href="admin.php">
-Admin
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-warning" href="add_trainer.php">
-Add Trainer
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-warning" href="dashbord.php">
-Dashboard
-</a>
-</li>
-
-<?php endif; ?>
-
-<li class="nav-item">
-<a class="nav-link text-danger" href="logout.php">
-Logout
-</a>
-</li>
-
-<?php else : ?>
-
-<li class="nav-item">
-<a class="nav-link text-success" href="login.php">
-Login
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link text-info" href="register.php">
-Register
-</a>
-</li>
-
-<?php endif; ?>
-
-</ul>
-
-</div>
-
-</div>
-
-</nav>
 
 <!-- HERO CAROUSEL -->
 
@@ -279,9 +134,392 @@ data-bs-slide="next">
 
 </div>
 
+<section class="py-5 bg-light">
+
+<div class="container">
+
+<h2 class="text-center fw-bold mb-5">
+Why Choose FEET TO FIT?
+</h2>
+
+<div class="row text-center">
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 h-100">
+
+<div class="card-body">
+
+<h1>🏋️</h1>
+
+<h4>Modern Equipment</h4>
+
+<p>
+Train with high-quality fitness equipment designed for every workout.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 h-100">
+
+<div class="card-body">
+
+<h1>👨‍🏫</h1>
+
+<h4>Expert Trainers</h4>
+
+<p>
+Certified trainers help you reach your fitness goals safely.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 h-100">
+
+<div class="card-body">
+
+<h1>❤️</h1>
+
+<h4>Healthy Lifestyle</h4>
+
+<p>
+Fitness programs designed to improve your strength and well-being.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card shadow border-0 h-100">
+
+<div class="card-body">
+
+<h1>🤝</h1>
+
+<h4>Friendly Community</h4>
+
+<p>
+Become part of a supportive fitness family that motivates you every day.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<?php
+
+$featured = $conn->query("SELECT * FROM trainers LIMIT 3");
+
+?>
+
+<section class="container py-5">
+
+<h2 class="text-center fw-bold mb-5">
+Meet Our Trainers
+</h2>
+
+<div class="row">
+
+<?php while($trainer = $featured->fetch_assoc()){ ?>
+
+<div class="col-md-4">
+
+<div class="card shadow h-100">
+
+<img
+src="assets/images/trainers/<?php echo $trainer['image'];?>"
+class="card-img-top"
+style="height:320px; object-fit:cover;">
+
+<div class="card-body text-center">
+
+<h4><?php echo htmlspecialchars($trainer['name']); ?></h4>
+
+<p><?php echo htmlspecialchars($trainer['specialty']); ?></p>
+
+<a href="trainers.php" class="btn btn-success">
+
+View Profile
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<?php } ?>
+
+</div>
+
+</section>
+<section class="bg-dark text-white py-5">
+
+<div class="container">
+
+<h2 class="text-center mb-5">
+What Our Members Say
+</h2>
+
+<div class="row">
+
+<div class="col-md-4">
+
+<div class="card bg-secondary text-white">
+
+<div class="card-body">
+
+★★★★★
+
+<p class="mt-3">
+
+Joining FEET TO FIT completely transformed my fitness journey. The trainers are amazing!
+
+</p>
+
+<h6>- Sarah W.</h6>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card bg-secondary text-white">
+
+<div class="card-body">
+
+★★★★★
+
+<p class="mt-3">
+
+Excellent equipment and a motivating environment. I enjoy every workout session.
+
+</p>
+
+<h6>- Brian K.</h6>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card bg-secondary text-white">
+
+<div class="card-body">
+
+★★★★★
+
+<p class="mt-3">
+
+The booking system is easy to use and the trainers are very professional.
+
+</p>
+
+<h6>- Grace N.</h6>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<section class="container py-5">
+
+<h2 class="text-center fw-bold mb-5">
+
+Membership Plans
+
+</h2>
+
+<div class="row">
+
+<div class="col-md-4">
+
+<div class="card shadow text-center">
+
+<div class="card-body">
+
+<h3>Basic</h3>
+
+<h2 class="text-primary">
+
+Ksh 2,500
+
+</h2>
+
+<p>Gym Access</p>
+
+<p>Locker Access</p>
+
+<p>1 Trainer Session</p>
+
+<a href="membership.php" class="btn btn-primary">
+
+Choose Plan
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card shadow border-success">
+
+<div class="card-header bg-success text-white text-center">
+
+Most Popular
+
+</div>
+
+<div class="card-body text-center">
+
+<h3>Premium</h3>
+
+<h2 class="text-success">
+
+Ksh 5,000
+
+</h2>
+
+<p>Unlimited Gym</p>
+
+<p>Unlimited Classes</p>
+
+<p>Personal Trainer</p>
+
+<a href="membership.php" class="btn btn-success">
+
+Choose Plan
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card shadow text-center">
+
+<div class="card-body">
+
+<h3>VIP</h3>
+
+<h2 class="text-danger">
+
+Ksh 8,000
+
+</h2>
+
+<p>Premium Benefits</p>
+
+<p>Nutrition Plan</p>
+
+<p>VIP Support</p>
+
+<a href="membership.php" class="btn btn-danger">
+
+Choose Plan
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<section class="bg-light py-5">
+
+<div class="container">
+
+<h2 class="text-center fw-bold mb-5">
+
+Contact Us
+
+</h2>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<h4>FEET TO FIT Gym</h4>
+
+<p>📍 Nairobi, Kenya</p>
+
+<p>📞 +254 712 345678</p>
+
+<p>📧 info@feettofit.com</p>
+
+<p>🕒 Mon - Sat: 6:00 AM - 10:00 PM</p>
+
+</div>
+
+<div class="col-md-6">
+
+<iframe
+src="https://www.google.com/maps?q=Nairobi&output=embed"
+width="100%"
+height="300"
+style="border:0;"
+loading="lazy">
+</iframe>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
 <!-- EVENTS -->
 
-<<div class="container my-5">
+<div class="container my-5">
 
     <h2 class="text-center fw-bold mb-4">
         Upcoming Events
@@ -386,34 +624,4 @@ data-bs-slide="next">
     </div>
 
 </div>
-<!-- FOOTER -->
-
-<footer class="bg-dark text-light text-center py-4 mt-5">
-
-<div class="container">
-
-<h5>FEET TO FIT GYM</h5>
-
-<p>
-Transform Your Body, Transform Your Life
-</p>
-
-<p>
-📍 Nairobi, Kenya |
-📞 +254 705046184|
-✉ info@feettofit.com
-</p>
-
-<p>
-&copy; <?php echo date('Y'); ?>
-FEET TO FIT. All Rights Reserved.
-</p>
-
-</div>
-
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

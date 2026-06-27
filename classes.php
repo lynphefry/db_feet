@@ -1,35 +1,13 @@
 <?php
-include 'auth.php';
-
+include 'includes/db.php';
+include 'includes/auth.php';
+include 'includes/header.php';
+include 'includes/navbar.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Classes | FEET TO FIT</title>
-<link rel="stylesheet" href="assets\style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-</head>
 
 <body>
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-
-        <a class="navbar-brand" href="index.php">FEET TO FIT</a>
-
-        <div class="navbar-nav ms-auto">
-
-            <a class="nav-link text-white" href="index.php">Home</a>
-            <a class="nav-link text-white" href="trainers.php">Trainers</a>
-            <a class="nav-link text-white" href="classes.php">Classes</a>
-            <a class="nav-link text-white" href="schedule.php">Schedule</a>
-            <a class="nav-link text-white" href="membership.php">Membership</a>
-            
 
             <?php if (isLoggedIn()) : ?>
                 <a class="nav-link text-white" href="booking.php">My Bookings</a>

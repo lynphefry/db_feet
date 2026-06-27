@@ -1,6 +1,9 @@
 <?php
-include 'db.php';
-include 'auth.php';
+include 'includes/db.php';
+include 'includes/auth.php';
+include 'includes/header.php';
+include 'includes/navbar.php';
+
 
 if (!isLoggedIn()) {
     header("Location: login.php");
@@ -23,17 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Book Class | FEET TO FIT</title>
 
-    <link rel="stylesheet" href="assets/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
 
 <div class="container mt-5">
 
@@ -70,7 +63,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

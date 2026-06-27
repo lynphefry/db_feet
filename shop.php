@@ -1,42 +1,18 @@
 <?php
+include 'includes/db.php';
+include 'includes/auth.php';
+include 'includes/header.php';
+include 'includes/navbar.php';
 
-include 'auth.php';
-
+if (!isLoggedIn()) {
+    header("Location: login.php");
+    exit();
+}
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Shop | FEET TO FIT</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
-</head>
-
-<body>
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-
-        <a class="navbar-brand" href="index.php">FEET TO FIT</a>
-
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="index.php">Home</a>
-            <a class="nav-link" href="trainers.php">Trainers</a>
-            <a class="nav-link" href="classes.php">Classes</a>
-            <a class="nav-link" href="schedule.php">Schedule</a>
-            <a class="nav-link" href="membership.php">Membership</a>
-            <a class="nav-link active" href="shop.php">Shop</a>
-            <a class="nav-link" href="contact.php">Contact</a>
-        </div>
-
-    </div>
-</nav>
 
 <div class="container mt-5">
 
@@ -165,7 +141,4 @@ if (!isset($_SESSION['cart'])) {
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

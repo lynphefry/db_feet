@@ -1,6 +1,9 @@
 <?php
-include 'db.php';
-include 'auth.php';
+include 'includes/db.php';
+include 'includes/auth.php';
+include 'includes/header.php';
+include 'includes/navbar.php';
+?>
 
 $result = mysqli_query($conn,
 "SELECT orders.*, members.first_name

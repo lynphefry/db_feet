@@ -1,95 +1,193 @@
 <?php
-include 'db.php';
-include 'auth.php';
-include 'navbar.php';
-$error = "";
+include "includes/auth.php";
+include "includes/db.php";
+
+if (isLoggedIn()) {
+    header("Location: dashboard.php");
+    exit();
+}
+
+$message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $email = $_POST['email'];
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    $result = mysqli_query($conn, "SELECT * FROM members WHERE email='$email'");
-    $user = mysqli_fetch_assoc($result);
+    $stmt = $conn->prepare("SELECT id, first_name, password, role FROM members WHERE email=?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
 
-    if ($user && password_verify($password, $user['password'])) {
+    $result = $stmt->get_result();
 
-        
-        loginUser(
-            $user['id'],
-            $user['email'],
-            $user['first_name'],
-            $user['role']
-        );
+    if ($result->num_rows == 1) {
 
-        header("Location: account.php");
-        exit;
+        $user = $result->fetch_assoc();
+
+        if (password_verify($password, $user['password'])) {
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['first_name'] = $user['first_name'];
+            $_SESSION['role'] = $user['role'];
+
+            header("Location: dashboard.php");
+            exit();
+
+        } else {
+
+            $message = "<div class='alert alert-danger'>Invalid email or password.</div>";
+
+        }
 
     } else {
-        $error = "Invalid email or password";
+
+        $message = "<div class='alert alert-danger'>Invalid email or password.</div>";
+
     }
+
+    $stmt->close();
 }
+
+include "includes/header.php";
+include "includes/navbar.php";
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="assets\style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  
-</head>
-<body>
-  
-  <div class="container vh-100 d-flex justify-content-center align-items-center">
 
-    <div class="card shadow-lg p-4" style="width:450px;border-radius:20px;">
+<div class="container mt-5">
 
-        <h2 class="text-center mb-4 fw-bold">
-            FEET TO FIT
-        </h2>
+    <div class="row justify-content-center">
 
-        <p class="text-center text-muted">
-            Welcome Back
-        </p>
+        <div class="col-md-5">
 
-        <form method="POST">
+            <div class="card shadow">
 
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email"
-                       name="email"
-                       class="form-control"
-                       required>
+                <div class="card-header bg-success text-white text-center">
+<div class="mb-3">
+    <label class="form-label">Login As</label>
+
+    <select name="role" class="form-select" required>
+        <option value="trainee">Trainee</option>
+        <option value="trainer">Trainer</option>
+    </select>
+</div>
+                    <h3>Login</h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <?= $message ?>
+
+                    <form method="POST" autocomplete="off">
+
+                        <input type="text" style="display:none">
+                        <input type="password" style="display:none">
+
+                        <div class="mb-3">
+
+                            <label>Email</label>
+<input
+    type="email"
+    name="email"
+    id="email"
+    class="form-control"
+    autocomplete="new-email"
+    spellcheck="false"
+    autocapitalize="off"
+    required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label>Password</label>
+
+                            <div class="input-group">
+
+                                <input
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    class="form-control"
+                                    placeholder="Enter your password"
+                                    autocomplete="new-password"
+                                    required>
+
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
+                                    onclick="togglePassword()">
+
+                                    👁
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <div class="text-end mb-3">
+
+                            <a href="forgot_password.php">
+                                Forgot Password?
+                            </a>
+
+                        </div>
+
+                        <button class="btn btn-success w-100">
+
+                            Login
+
+                        </button>
+
+                    </form>
+
+                    <div class="text-center mt-3">
+
+                        Don't have an account?
+
+                        <a href="register.php">
+
+                            Register
+
+                        </a>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="mb-3">
-                <label>Password</label>
-                <input type="password"
-                       name="password"
-                       class="form-control"
-                       required>
-            </div>
-<div class="text-end mb-3">
-    <a href="#" class="fw-bold text-success text-decoration-none">Forgot Password?</a>
-</div>
-            <button class="btn btn-success w-100">
-                Login
-            </button>
+        </div>
 
-        </form>
-
-    <p class="text-center mt-4">
-    New to FEET TO FIT?
-    <a href="register.php" class="fw-bold text-success text-decoration-none">
-        Create Account
-    </a>
-</p>    
+    </div>
 
 </div>
 
+<script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+function togglePassword(){
+
+    var password=document.getElementById("password");
+
+    if(password.type==="password"){
+
+        password.type="text";
+
+    }else{
+
+        password.type="password";
+
+    }
+
+}
+
+window.onload=function(){
+
+document.getElementById("email").value="";
+document.getElementById("password").value="";
+
+}
+
+</script>
+
+<?php include "includes/footer.php"; ?>

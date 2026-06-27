@@ -1,120 +1,166 @@
 <?php
-include 'db.php';
-include 'auth.php';
+include 'includes/db.php';
+include 'includes/auth.php';
+
+include 'includes/header.php';
+include 'includes/navbar.php';
+
+// Search
+if (isset($_GET['search']) && trim($_GET['search']) != "") {
+
+    $search = "%" . trim($_GET['search']) . "%";
+
+    $stmt = $conn->prepare("
+        SELECT *
+        FROM trainers
+        WHERE name LIKE ?
+        ORDER BY name ASC
+    ");
+
+    $stmt->bind_param("s", $search);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+} else {
+
+    $result = $conn->query("
+        SELECT *
+        FROM trainers
+        ORDER BY name ASC
+    ");
+}
 ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Trainers | FEET TO FIT</title>
-<link rel="stylesheet" href="assets\style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-</head>
-
-<body>
-
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-
-        <a class="navbar-brand" href="index.php">FEET TO FIT</a>
-
-        <div class="navbar-nav ms-auto">
-
-            <a class="nav-link" href="index.php">Home</a>
-            <a class="nav-link active" href="trainers.php">Trainers</a>
-            <a class="nav-link" href="classes.php">Classes</a>
-            <a class="nav-link" href="schedule.php">Schedule</a>
-            <a class="nav-link" href="membership.php">Membership</a>
-            <a class="nav-link" href="shop.php">Shop</a>
-            <a class="nav-link" href="contact.php">Contact</a>
-<a class="nav-link text-white" href="dashbord.php">Dashboard</a>
-
-            <?php if (isLoggedIn()) : ?>
-                <a class="nav-link" href="booking.php">Bookings</a>
-                <a class="nav-link" href="account.php">Account</a>
-
-                <?php if (isAdmin()) : ?>
-                    <a class="nav-link text-warning" href="admin.php">Admin</a>
-                    <a class="nav-link text-warning" href="add_trainer.php">Add Trainer</a>
-                <?php endif; ?>
-
-                <a class="nav-link text-danger" href="logout.php">Logout</a>
-
-            <?php else : ?>
-                <a class="nav-link text-success" href="login.php">Login</a>
-                <a class="nav-link text-info" href="register.php">Register</a>
-            <?php endif; ?>
-
-        </div>
-
-    </div>
-</nav>
-
-<!-- PAGE HEADER -->
 <div class="container mt-5">
 
-    <h2 class="text-center fw-bold">Our Trainers</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <p class="text-center text-muted mb-5">
-        Meet our professional fitness trainers
-    </p>
+        <h2 class="fw-bold">Our Trainers</h2>
 
-    <div class="row g-4">
-<?php
-    // fetch trainers from database
-    $sql = "SELECT * FROM trainers";
-    $result = $conn->query($sql);
+        <?php if (isAdmin()) { ?>
 
-    if ($result && $result->num_rows > 0) {
-        while ($t = $result->fetch_assoc()) {
-            // choose image: use server filesystem to check, use URL for <img>
-            $defaultUrl = 'assets/images/trainers/default.jpg';
-            $imgFileUrl = $defaultUrl;
+            <a href="add_trainer.php" class="btn btn-success">
+                + Add Trainer
+            </a>
 
-            if (!empty($t['image'])) {
-                $filename = basename($t['image']); // avoid path traversal
-                $fsPath = __DIR__ . '/assets/images/trainers/' . $filename; // filesystem path
-                $urlPath = 'assets/images/trainers/' . rawurlencode($filename);   // url path
+        <?php } ?>
 
-                if (is_file($fsPath) && is_readable($fsPath)) {
-                    $imgFileUrl = $urlPath;
-                }
-            }
-?>
-            
-        <div class="col-md-4">
-            <div class="card shadow h-100">
-                <img src="<?php echo htmlspecialchars($imgFileUrl, ENT_QUOTES); ?>" class="card-img-top" style="height:280px; width:100%; object-fit:cover;" alt="<?php echo htmlspecialchars($t['name'], ENT_QUOTES); ?>" onerror="this.onerror=null;this.src='assets/images/trainers/default.jpg';">
-                <div class="card-body text-center">
-                    <h4><?php echo htmlspecialchars($t['name'], ENT_QUOTES); ?></h4>
-                    <p class="text-muted"><?php echo htmlspecialchars($t['specialty'], ENT_QUOTES); ?></p>
-                    <p>📞 <?php echo htmlspecialchars($t['phone'], ENT_QUOTES); ?></p>
+    </div>
+
+    <!-- Search -->
+
+    <form method="GET" class="mb-4">
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search trainer..."
+                value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+
+            <button class="btn btn-primary">
+                Search
+            </button>
+
+        </div>
+
+    </form>
+
+    <div class="row">
+
+        <?php if ($result->num_rows > 0) { ?>
+
+            <?php while ($trainer = $result->fetch_assoc()) { ?>
+
+                <div class="col-md-4 mb-4">
+
+                    <div class="card shadow h-100">
+
+                        <?php
+                        $image = !empty($trainer['image'])
+                            ? "assets/images/trainers/" . $trainer['image']
+                            : "assets/images/trainers/default.jpg";
+                        ?>
+
+                        <img
+                            src="<?php echo $image; ?>"
+                            class="card-img-top"
+                            style="height:320px; object-fit:cover;"
+                            alt="Trainer">
+
+                        <div class="card-body text-center">
+
+                            <h4>
+                                <?php echo htmlspecialchars($trainer['name']); ?>
+                            </h4>
+
+                            <p class="text-success fw-bold">
+
+                                <?php echo htmlspecialchars($trainer['specialty']); ?>
+
+                            </p>
+
+                            <?php if (!empty($trainer['experience'])) { ?>
+
+                                <p class="text-muted">
+
+                                    <?php echo htmlspecialchars($trainer['experience']); ?>
+
+                                </p>
+
+                            <?php } ?>
+
+                        </div>
+
+                        <?php if (isAdmin()) { ?>
+
+                            <div class="card-footer text-center">
+
+                                <a
+                                    href="edit_trainer.php?id=<?php echo $trainer['id']; ?>"
+                                    class="btn btn-warning btn-sm">
+
+                                    Edit
+
+                                </a>
+
+                                <a
+                                    href="delete_trainer.php?id=<?php echo $trainer['id']; ?>"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Delete this trainer?');">
+
+                                    Delete
+
+                                </a>
+
+                            </div>
+
+                        <?php } ?>
+
+                    </div>
+
                 </div>
+
+            <?php } ?>
+
+        <?php } else { ?>
+
+            <div class="col-12">
+
+                <div class="alert alert-warning text-center">
+
+                    No trainers found.
+
+                </div>
+
             </div>
-        </div>
-        <?php
-        } // end while
-    } else {
-        ?>
-        <div class="col-12 text-center">
-            <div class="alert alert-warning">
-                <h4>No Trainers Found</h4>
-                <p>Add trainers from the admin panel.</p>
-            </div>
-        </div>
-        <?php
-    }
-?>
-  </div>
+
+        <?php } ?>
+
+    </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

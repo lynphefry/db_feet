@@ -4,9 +4,8 @@ ini_set('display_errors', 1);
 
 include 'config.php';
 
-/* -------------------------
-   GET ACCESS TOKEN
---------------------------*/
+
+
 $url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
 
 $credentials = base64_encode($consumerKey . ':' . $consumerSecret);
@@ -26,22 +25,20 @@ if (!$token) {
     die("Failed to get access token");
 }
 
-/* -------------------------
-   USER DATA
---------------------------*/
+
+
 $phone = $_POST['phone'];
 $amount = $_POST['amount'];
 
-/* Fix phone format */
+
 if (substr($phone, 0, 1) == '0') {
     $phone = '254' . substr($phone, 1);
 }
 
-/* -------------------------
-   STK PUSH DATA
---------------------------*/
+   
+
 $shortcode = "174379";
-$passkey = "YOUR_PASSKEY"; // MUST BE REAL PASSKEY
+$passkey = "YOUR_PASSKEY"; 
 
 $timestamp = date("YmdHis");
 
@@ -77,5 +74,48 @@ curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($curl);
 curl_close($curl);
 
-echo $response;
+$result = json_decode($response, true);
+
+if (isset($result['ResponseCode']) && $result['ResponseCode'] == "0") {
+
+    $user_id = $_SESSION['user_id'];
+
+    foreach ($_SESSION['cart'] as $item) {
+
+        $quantity = $item['quantity'];
+        $total = $item['price'] * $quantity;
+
+        $stmt = $conn->prepare("
+            INSERT INTO orders
+            (user_id, product_name, quantity, total_price)
+            VALUES (?, ?, ?, ?)
+        ");
+
+        $stmt->bind_param(
+            "isid",
+            $user_id,
+            $item['name'],
+            $quantity,
+            $total
+        );
+
+        $stmt->execute();
+    }
+
+    // Empty cart
+    unset($_SESSION['cart']);
+
+    header("Location: my_orders.php?success=1");
+    exit();
+
+} else {
+
+    echo "<h3 class='text-danger text-center mt-5'>
+            Payment request failed.
+          </h3>";
+
+    echo "<pre>";
+    print_r($result);
+    echo "</pre>";
+}
 ?>

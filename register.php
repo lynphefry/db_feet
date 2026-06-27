@@ -1,111 +1,232 @@
 <?php
-include 'db.php';
-include 'auth.php';
-include 'navbar.php';
+include "includes/db.php";
+include "includes/auth.php";
+include "includes/header.php";
+include "includes/navbar.php";
+
+$message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $first_name = trim($_POST['first_name']);
+    $last_name  = trim($_POST['last_name']);
+    $email      = trim($_POST['email']);
+    $phone      = trim($_POST['phone']);
+    $password   = $_POST['password'];
+    $confirm    = $_POST['confirm_password'];
+    $role       = $_POST['role']; // NEW
 
-    $sql = "INSERT INTO members (first_name, email, password)
-            VALUES ('$name', '$email', '$password')";
+    if ($password != $confirm) {
 
-    mysqli_query($conn, $sql);
+        $message = "<div class='alert alert-danger'>Passwords do not match!</div>";
 
-    echo "Registered successfully!";
+    } else {
+
+        // Check if email already exists
+        $check = $conn->prepare("SELECT id FROM members WHERE email=?");
+        $check->bind_param("s", $email);
+        $check->execute();
+        $check->store_result();
+
+        if ($check->num_rows > 0) {
+
+            $message = "<div class='alert alert-warning'>Email already exists.</div>";
+
+        } else {
+
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            // INSERT ROLE
+            $stmt = $conn->prepare("
+                INSERT INTO members
+                (first_name, last_name, email, phone, password, role)
+                VALUES
+                (?, ?, ?, ?, ?, ?)
+            ");
+
+            $stmt->bind_param(
+                "ssssss",
+                $first_name,
+                $last_name,
+                $email,
+                $phone,
+                $hashedPassword,
+                $role
+            );
+
+            if ($stmt->execute()) {
+
+                header("Location: login.php?registered=1");
+                exit();
+
+            } else {
+
+                $message = "<div class='alert alert-danger'>
+                Registration failed: ".$conn->error."
+                </div>";
+
+            }
+
+            $stmt->close();
+        }
+
+        $check->close();
+    }
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="assets\style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-</head>
-<body>
-  
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-
-    <a class="navbar-brand" href="index.php">Feet To Fit</a>
-
-    <div class="ms-auto">
-
-      <a class="btn btn-outline-light btn-sm" href="index.php">Home</a>
-      <a class="btn btn-outline-light btn-sm" href="trainers.php">Trainers</a>
-      <a class="btn btn-outline-light btn-sm" href="book_class.php">Classes</a>
-      <a class="nav-link text-white" href="dashbord.php">Dashboard</a>
-
-      <?php if (isLoggedIn()): ?>
-        <a class="btn btn-warning btn-sm" href="account.php">Dashboard</a>
-        <a class="btn btn-danger btn-sm" href="logout.php">Logout</a>
-      <?php else: ?>
-        <a class="btn btn-success btn-sm" href="login.php">Login</a>
-      <?php endif; ?>
-
-      <?php if (isLoggedIn() && isAdmin()): ?>
-        <a class="btn btn-info btn-sm" href="admin.php">Admin</a>
-      <?php endif; ?>
-
-    </div>
-
-  </div>
-</nav>
-
-
-
 <div class="container mt-5">
 
-  <div class="row justify-content-center">
+<div class="row justify-content-center">
 
-    <div class="col-md-6">
+<div class="col-md-6">
 
-      <div class="card shadow p-4">
+<div class="card shadow">
 
-        <h3 class="text-center">Register</h3>
+<div class="card-header bg-success text-white text-center">
+<h3>Create Account</h3>
+</div>
 
-        
+<div class="card-body">
 
-        <form method="POST">
+<?= $message ?>
 
-    <div class="mb-3">
-        <label class="form-label">Full Name</label>
-        <input type="text"
-               name="name"
-               class="form-control"
-               placeholder="Enter your name"
-               required>
-    </div>
+<form method="POST" autocomplete="off">
 
-    <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email"
-               name="email"
-               class="form-control"
-               placeholder="Enter your email"
-               required>
-    </div>
+<div class="mb-3">
+<label>First Name</label>
+<input
+type="text"
+name="first_name"
+class="form-control"
+required>
+</div>
 
-    <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input type="password"
-               name="password"
-               class="form-control"
-               placeholder="Create password"
-               required>
-    </div>
+<div class="mb-3">
+<label>Last Name</label>
+<input
+type="text"
+name="last_name"
+class="form-control"
+required>
+</div>
 
-    <button type="submit" class="btn btn-success w-100">
-        Create Account
-    </button>
+<div class="mb-3">
+<label>Email</label>
+<input
+type="email"
+name="email"
+class="form-control"
+autocomplete="new-email"
+required>
+</div>
+
+<div class="mb-3">
+<label>Phone</label>
+<input
+type="text"
+name="phone"
+class="form-control"
+required>
+</div>
+
+<div class="mb-3">
+<label>Password</label>
+
+<div class="input-group">
+
+<input
+type="password"
+id="password"
+name="password"
+class="form-control"
+autocomplete="new-password"
+required>
+
+<button
+type="button"
+class="btn btn-outline-secondary"
+onclick="togglePassword('password')">
+👁
+</button>
+
+</div>
+
+</div>
+
+<div class="mb-3">
+<label>Confirm Password</label>
+
+<div class="input-group">
+
+<input
+type="password"
+id="confirm_password"
+name="confirm_password"
+class="form-control"
+autocomplete="new-password"
+required>
+
+<button
+type="button"
+class="btn btn-outline-secondary"
+onclick="togglePassword('confirm_password')">
+👁
+</button>
+
+</div>
+
+</div>
+
+<div class="mb-3">
+<label class="form-label">Register As</label>
+
+<select
+name="role"
+class="form-select"
+required>
+
+<option value="">-- Select Role --</option>
+<option value="trainee">Trainee</option>
+<option value="trainer">Trainer</option>
+
+</select>
+
+</div>
+
+<button class="btn btn-success w-100">
+Register
+</button>
 
 </form>
 
+<div class="text-center mt-3">
+Already have an account?
+<a href="login.php">Login</a>
+</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+function togglePassword(id){
+
+    var input = document.getElementById(id);
+
+    if(input.type === "password"){
+        input.type = "text";
+    }else{
+        input.type = "password";
+    }
+
+}
+</script>
+
+<?php include "includes/footer.php"; ?>

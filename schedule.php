@@ -1,8 +1,10 @@
-
-
 <?php
-include 'auth.php';
+include 'includes/db.php';
+include 'includes/auth.php';
+include 'includes/header.php';
+include 'includes/navbar.php';
 ?>
+
 
 <!DOCTYPE html>
 
