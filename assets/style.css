@@ -13,3 +13,136 @@ body{
 .btn{
     border-radius:10px;
 }
+/* ===========================
+   Phones (576px and below)
+=========================== */
+@media (max-width: 576px) {
+
+    body{
+        font-size:14px;
+    }
+
+    .container{
+        padding:10px;
+    }
+
+    .card{
+        margin-bottom:20px;
+    }
+
+    .card-header h3{
+        font-size:20px;
+    }
+
+    h1{
+        font-size:28px;
+    }
+
+    h2{
+        font-size:24px;
+    }
+
+    .carousel-item img{
+        height:250px;
+    }
+
+    .hero-caption{
+        padding:10px;
+    }
+
+    .hero-caption h1{
+        font-size:22px;
+    }
+
+    .hero-caption p{
+        font-size:14px;
+    }
+
+    .table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    .btn{
+        width:100%;
+        margin-bottom:10px;
+    }
+
+    img{
+        max-width:100%;
+        height:auto;
+    }
+}
+/* ===========================
+   Large Screens
+=========================== */
+@media (min-width: 1200px) {
+
+    .container{
+        max-width:1200px;
+    }
+
+    .carousel-item img{
+        height:700px;
+    }
+
+}
+/* ===========================
+   Tablets (768px and below)
+=========================== */
+@media (max-width: 768px) {
+
+    .container{
+        padding:15px;
+    }
+
+    .navbar-nav{
+        text-align:center;
+    }
+
+    .card{
+        margin-bottom:20px;
+    }
+
+    h1{
+        font-size:2rem;
+    }
+
+    h2{
+        font-size:1.7rem;
+    }
+
+    .btn{
+        width:100%;
+        margin-bottom:10px;
+    }
+
+    table{
+        font-size:14px;
+    }
+
+    .carousel-item img{
+        height:350px;
+    }
+
+    .hero-caption h1{
+        font-size:28px;
+    }
+
+    .hero-caption p{
+        font-size:16px;
+    }
+}
+@media (max-width: 991px){
+
+    .navbar-nav{
+        text-align:center;
+    }
+
+    .navbar .btn{
+        width:100%;
+        margin-top:10px;
+    }
+
+}

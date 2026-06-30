@@ -5,6 +5,14 @@
     <a class="navbar-brand fw-bold" href="index.php">
         <i class="bi bi-heart-pulse-fill"></i> FEET TO FIT
     </a>
+    <li class="nav-item">
+    <a class="nav-link" href="add_booking.php">Book Trainer</a>
+</li>
+<li>
+    <a class="dropdown-item" href="trainer_schedule.php">
+        My Schedule
+    </a>
+</li>
 
     <button
         class="navbar-toggler"

@@ -97,18 +97,26 @@ if (isset($_GET['search']) && trim($_GET['search']) != "") {
                             </h4>
 
                             <p class="text-success fw-bold">
-
                                 <?php echo htmlspecialchars($trainer['specialty']); ?>
-
                             </p>
 
                             <?php if (!empty($trainer['experience'])) { ?>
 
                                 <p class="text-muted">
-
                                     <?php echo htmlspecialchars($trainer['experience']); ?>
-
                                 </p>
+
+                            <?php } ?>
+
+                            <!-- BOOK TRAINER BUTTON -->
+                            <?php if (!isAdmin()) { ?>
+
+                                <a href="add_booking.php?trainer_id=<?php echo $trainer['id']; ?>"
+                                   class="btn btn-success mt-2 w-100">
+
+                                    Book Trainer
+
+                                </a>
 
                             <?php } ?>
 
