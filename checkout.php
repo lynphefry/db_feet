@@ -1,4 +1,4 @@
-<form method="POST" action="stk_push.php">
+<form method="POST" action="membership_stk_push.php">
 
     <input type="hidden" name="amount" value="<?= $total ?>">
 

@@ -49,7 +49,7 @@ if (!isLoggedIn()) {
 
                 <div class="card-body">
 
-                    <h1 class="fw-bold">Ksh 2,000</h1>
+                    <h1 class="fw-bold">Ksh 2000</h1>
                     <p class="text-muted">Per Month</p>
 
                     <ul class="list-unstyled mt-3">
@@ -62,7 +62,7 @@ if (!isLoggedIn()) {
 
                 <div class="card-footer">
 
-                    <form action="mpesa.php" method="POST">
+                    <form action="membership_stk_push.php" method="POST">
 
                         <input type="hidden" name="plan" value="Basic">
                         <input type="hidden" name="amount" value="2000">
